@@ -186,6 +186,8 @@ def print_json(jobs, running_work, view_settings):
 
 
 def print_view(jobs, running_work, analysis, drives, next_log_check, view_settings, loop):
+    # Farmer Key
+
     # Job Table
     job_data = get_job_data(jobs=jobs, running_work=running_work, view_settings=view_settings)
 
@@ -201,7 +203,7 @@ def print_view(jobs, running_work, analysis, drives, next_log_check, view_settin
     else:
         os.system('clear')
     print(pretty_print_job_data(job_data))
-    print(f'Manager Status: {"Running" if manager_processes else "Stopped"}')
+    print(f'自动化开垦: {"运行中" if manager_processes else "已停止"}')
     print()
 
     if view_settings.get('include_drive_info'):
@@ -214,8 +216,8 @@ def print_view(jobs, running_work, analysis, drives, next_log_check, view_settin
               f'({ram_usage.percent}%)')
     print()
     if view_settings.get('include_plot_stats'):
-        print(f'Plots Completed Yesterday: {analysis["summary"].get(datetime.now().date() - timedelta(days=1), 0)}')
-        print(f'Plots Completed Today: {analysis["summary"].get(datetime.now().date(), 0)}')
+        print(f'昨日P图数: {analysis["summary"].get(datetime.now().date() - timedelta(days=1), 0)}')
+        print(f'今日P图数: {analysis["summary"].get(datetime.now().date(), 0)}')
         print()
     if loop:
         print(f"Next log check at {next_log_check.strftime('%Y-%m-%d %H:%M:%S')}")
