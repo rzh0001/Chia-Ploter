@@ -12,7 +12,7 @@ from plotmanager.library.utilities.configuration import test_configuration
 from plotmanager.library.utilities.exceptions import ManagerError, TerminationException
 from plotmanager.library.utilities.jobs import load_jobs
 from plotmanager.library.utilities.log import analyze_log_dates, check_log_progress, analyze_log_times
-from plotmanager.library.utilities.notifications import send_notifications
+from plotmanager.library.utilities.notifications import send_notifications, send_log
 from plotmanager.library.utilities.print_r import print_view, print_json
 from plotmanager.library.utilities.processes import is_windows, get_manager_processes, get_running_plots, \
     start_process, identify_drive, get_system_drives
@@ -167,7 +167,11 @@ def view(loop=True):
             print_view(jobs=jobs, running_work=running_work, analysis=analysis, drives=drives,
                        next_log_check=datetime.now() + timedelta(seconds=view_check_interval),
                        view_settings=view_settings, loop=loop)
-
+            send_log(
+                title='Plot Manager',
+                body=f'You completed a plot on {socket.gethostname()}!',
+                settings=notification_settings,
+            )
             if not loop:
                 break
             time.sleep(view_check_interval)

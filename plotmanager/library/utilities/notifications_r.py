@@ -22,14 +22,13 @@ def _send_notifications(title, body, settings):
         import requests
         requests.post(settings.get('ifttt_webhook_url'), data={'value1': title, 'value2': body})
 
+    if settings.get('r') is True:
+        import requests
+        requests.post(settings.get('r_server_url'), data={'value1': title, 'value2': body})
+
 
 def send_notifications(title, body, settings):
     try:
         _send_notifications(title=title, body=body, settings=settings)
     except:
         pass
-
-
-def send_log(title, body, server_url):
-    import requests
-    requests.post(server_url, data={'value1': title, 'value2': body})
